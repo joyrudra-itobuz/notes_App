@@ -4,7 +4,41 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <title>Home</title>
   </head>
-  <body></body>
+  <body>
+    <nav class="flex justify-between m-5">
+      <h1 class="my-auto">Notes</h1>
+      <div class="flex gap-5">
+        <button class="py-2 px-3 bg-[#3b3b3b] rounded-xl">
+          <img
+            src="images/content/header/search.svg"
+            alt="search-icon"
+            class="w-6"
+          />
+        </button>
+        <a href="#" target="_blank" class="my-auto p-3 bg-[#3b3b3b] rounded-xl"
+          ><img
+            src="images/content/header/info.svg"
+            alt="info-icon"
+            class="w-6"
+        /></a>
+      </div>
+    </nav>
+    <header class="flex flex-col justify-center items-center h-[70vh]">
+      <img src="images/content/header/rafiki.svg" alt="" />
+      <p class="text-3xl no-notes-text text-center">Create your First Note</p>
+    </header>
+    <button class="bg-[#252525] rounded-full home-add-note-btn p-3">
+      <img src="images/content/header/add.svg" alt="" />
+    </button>
+  </body>
 </html>

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
-import { notesModel } from "../models/notesStructure.mjs";
+import { notesModel } from "../models/notesStructure.js";
 
 export const app = express();
 

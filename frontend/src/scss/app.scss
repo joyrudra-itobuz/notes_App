@@ -21,3 +21,36 @@
 
 /* Browser specific styles */
 @import "dirty/hacks";
+
+/* Tailwind */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Importing Fonts
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --dark-body-bg: #252525;
+  --dark-body-text: white;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background-color: var(--dark-body-bg);
+  color: var(--dark-body-text);
+}
+body h1 {
+  font-size: 30px;
+}
+.no-notes-text {
+  font-weight: 300;
+}
+.home-add-note-btn {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  box-shadow: -0.3rem 0.3rem 1rem black;
+}

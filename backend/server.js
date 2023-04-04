@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import express from "express";
-import * as noteRouter from "./routes/noteRoutes.mjs";
+import * as noteRouter from "./routes/noteRoutes.js";
 
 const port = 6060;
 
