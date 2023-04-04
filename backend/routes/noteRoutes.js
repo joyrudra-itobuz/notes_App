@@ -16,7 +16,6 @@ app.get("/allNotes", async (req, res) => {
 
 app.post("/newNote", async (req, res) => {
   const note = await notesModel(req.body);
-
   try {
     await note.save();
     res.send(note);
