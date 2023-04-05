@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 import express from "express";
 import * as noteRouter from "./routes/noteRoutes.js";
+import cors from "cors";
 
 const port = 6060;
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 try {
   mongoose.connect(
