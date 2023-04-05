@@ -36,7 +36,9 @@
         /></a>
       </div>
     </nav>
-    <header class="flex flex-col justify-center items-center h-[70vh]">
+    <header
+      class="flex flex-col justify-center items-center h-[70vh] home-header"
+    >
       <img
         src="images/content/header/rafiki.svg"
         class="no-note-img"
@@ -49,13 +51,25 @@
       <ul
         class="flex flex-col gap-5 add-icon-dropdown hidden add-icon-dropdown-closing-amimation"
       >
-        <a href="newNote.html" target="_blank"> <li>NEW</li> </a
+        <a href="newNote.html"> <li>NEW</li> </a
         ><a href="#"> <li>SELECT</li> </a
         ><a href="#"> <li>FOCUS</li> </a>
       </ul>
-      <button class="bg-[#252525] rounded-full home-new-btn p-3">
+      <button
+        class="bg-[#252525] rounded-full home-new-btn p-3"
+        id="homeNewBtn"
+      >
         <img src="images/content/header/add.svg" alt="" />
       </button>
     </div>
+    <script>
+      function deleteBtnHandler(e) {
+        console.log(e);
+        const apiUrl = "http://localhost:6060/deleteNote/" + e;
+        fetch(apiUrl, {
+          method: "delete",
+        });
+      }
+    </script>
   </body>
 </html>
