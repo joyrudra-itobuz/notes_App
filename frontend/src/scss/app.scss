@@ -48,9 +48,98 @@ body h1 {
 .no-notes-text {
   font-weight: 300;
 }
-.home-add-note-btn {
+
+.all-notes-search-btn,
+.home-info-link {
+  transition: all 0.5s;
+}
+.all-notes-search-btn:hover,
+.home-info-link:hover {
+  transform: scale(1.2) rotate(360deg);
+}
+
+.home-new-btn {
   position: fixed;
   right: 2rem;
   bottom: 2rem;
   box-shadow: -0.3rem 0.3rem 1rem black;
+  transition: all 0.5s;
+}
+.home-new-btn:hover {
+  transform: scale(1.2) rotate(180deg);
+  box-shadow: 0rem 0rem 2rem rgb(0, 0, 0);
+}
+
+//Add Icon Dropdown Styles
+.add-icon-dropdown {
+  position: fixed;
+  right: 1.8rem;
+  bottom: 8rem;
+}
+.add-icon-dropdown a {
+  text-align: center;
+  background-color: #252525c3;
+  box-shadow: -0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.09);
+  padding: 1rem;
+  backdrop-filter: blur(5px);
+  border-radius: 1rem;
+  transition: all 0.5s;
+}
+.add-icon-dropdown a:hover {
+  transform: translateX(-1rem) scale(1.2);
+  color: black;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.288);
+  box-shadow: 0rem 0.3rem 2rem rgba(0, 0, 0, 0.09);
+}
+.add-icon-dropdown-openning-amimation {
+  animation-name: add-icon-dropdown-openning-amimation;
+  animation-duration: 0.5s;
+}
+@keyframes add-icon-dropdown-openning-amimation {
+  0% {
+    transform: translateY(100%) scale(0);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+.add-icon-dropdown-closing-amimation {
+  animation-name: add-icon-dropdown-closing-amimation;
+  animation-duration: 0.5s;
+}
+@keyframes add-icon-dropdown-closing-amimation {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(100%) scale(0);
+  }
+}
+
+//Notes Stylings
+
+.all-notes-container {
+  padding: 15px;
+}
+.note {
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: black;
+  padding: 1rem;
+  overflow-y: scroll;
+  border-radius: 1rem;
+  position: relative;
+  transition: all 0.5s;
+  backdrop-filter: blur(40px);
+}
+.note:hover {
+  padding-left: 20vw;
+  transform: scale(1.5);
+}
+.note h2 {
+  font-size: 30px;
+  font-weight: 700;
 }
