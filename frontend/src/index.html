@@ -15,7 +15,7 @@
     <title>Home</title>
   </head>
   <body class="overflow-x-hidden">
-    <nav class="flex justify-between m-5">
+    <nav class="flex justify-between m-5 pl-5">
       <h1 class="my-auto xl:text-6xl">Notes</h1>
       <div class="flex gap-5">
         <a
@@ -58,30 +58,32 @@
       </button>
     </div>
     <section class="edit-content-modal hidden overflow-hidden">
-      <nav class="flex justify-between p-5">
+      <nav class="flex justify-between pl-5 m-5">
         <button class="my-auto go-home-link modal-go-home">
           <i class="fa fa-arrow-left text-3xl"></i>
         </button>
-        <h2>Edit Note</h2>
+        <h2 class="xl:text-6xl">Edit Note</h2>
         <button class="reset-note-button">
           <i class="fa fa-rotate-left text-3xl"></i>
         </button>
       </nav>
-      <input
-        type="text"
-        name=""
-        id=""
-        class="heading edit-heading xl:text-5xl"
-        placeholder="Heading"
-      />
-      <textarea
-        name=""
-        id=""
-        cols="30"
-        rows="30"
-        class="content edit-content overflow-scroll xl:text-4xl"
-        placeholder="Content goes Here...."
-      ></textarea>
+      <div class="flex flex-col gap-20 p-5">
+        <input
+          type="text"
+          name=""
+          id=""
+          class="heading edit-heading xl:text-5xl"
+          placeholder="Heading"
+        />
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="30"
+          class="content edit-content overflow-scroll xl:text-4xl"
+          placeholder="Content goes Here...."
+        ></textarea>
+      </div>
       <button><i class="fa fa-edit edit-save-btn"></i></button>
     </section>
     <section class="warning-modal hidden">
@@ -145,6 +147,9 @@
           await fetch(apiUrl, {
             method: "delete",
           });
+          setTimeout(() => {
+            location.reload();
+          }, 0);
         });
 
         warningModalCancel.addEventListener("click", () => {
