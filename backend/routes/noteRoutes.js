@@ -77,31 +77,26 @@ app.patch("/updateNote/:id", async (req, res) => {
 app.delete("/deleteNote/:id", async (req, res) => {
   try {
     const note = await notesModel.findByIdAndDelete(req.params.id, req.body);
-
+    console.log("Deleted");
     if (!note) {
-      res.status(404).send([
-        {
-          data: null,
-          message: "Note Deleted successfully",
-          status: true,
-        },
-      ]);
+      res.status(404).send({
+        data: null,
+        message: "Not Found",
+        status: false,
+      });
     }
-
     res.status(200).send([
       {
         data: null,
-        message: "Failed",
-        status: false,
+        message: "Note Deletd Sucessfully",
+        status: true,
       },
     ]);
   } catch (error) {
-    res.status(404).send([
-      {
-        data: error,
-        message: "Failed",
-        status: false,
-      },
-    ]);
+    res.status(404).send({
+      data: error,
+      message: "Failed",
+      status: false,
+    });
   }
 });
