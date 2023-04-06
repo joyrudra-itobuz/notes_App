@@ -14,7 +14,7 @@
     />
     <title>Home</title>
   </head>
-  <body>
+  <body class="overflow-x-hidden">
     <nav class="flex justify-between m-5">
       <h1 class="my-auto">Notes</h1>
       <div class="flex gap-5">
@@ -46,13 +46,15 @@
       />
       <p class="text-3xl no-notes-text text-center">Create your First Note</p>
     </header>
-    <section class="all-notes-container flex flex-col gap-10"></section>
+    <section
+      class="all-notes-container flex flex-col gap-10 lg:flex-row lg:flex-wrap lg:mr-[-5rem] overflow-hidden"
+    ></section>
     <div>
       <ul
         class="flex flex-col gap-5 add-icon-dropdown hidden add-icon-dropdown-closing-amimation"
       >
         <a href="newNote.html"> <li>NEW</li> </a
-        ><a href="#"> <li>SELECT</li> </a
+        ><a href="editNote.html"> <li>EDIT</li> </a
         ><a href="#"> <li>FOCUS</li> </a>
       </ul>
       <button
@@ -62,12 +64,85 @@
         <img src="images/content/header/add.svg" alt="" />
       </button>
     </div>
+    <section class="edit-content-modal hidden">
+      <nav class="flex justify-between p-5">
+        <button class="my-auto go-home-link modal-go-home">
+          <i class="fa fa-arrow-left text-3xl"></i>
+        </button>
+        <button class="reset-note-button">
+          <i class="fa fa-rotate-left text-3xl"></i>
+        </button>
+      </nav>
+      <input
+        type="text"
+        name=""
+        id=""
+        class="heading edit-heading"
+        placeholder="Heading"
+      />
+      <textarea
+        name=""
+        id=""
+        cols="30"
+        rows="10"
+        class="content edit-content"
+        placeholder="Content goes Here...."
+      ></textarea>
+      <button><i class="fa fa-edit edit-save-btn"></i></button>
+    </section>
     <script>
-      function deleteBtnHandler(e) {
-        console.log(e);
+      //Functions not working when updated in main JS
+
+      //Note Del Function
+
+      async function deleteBtnHandler(e) {
         const apiUrl = "http://localhost:6060/deleteNote/" + e;
-        fetch(apiUrl, {
+        await fetch(apiUrl, {
           method: "delete",
+        });
+
+        location.reload();
+      }
+
+      //Note Edit Function
+
+      async function editBtnHandler(e) {
+        console.log(e);
+
+        const parentElement = document.getElementById(`${e}`);
+        let heading = parentElement.firstChild;
+        let content = heading.nextSibling;
+        heading = heading.textContent;
+        content = content.textContent;
+        console.log(heading, content);
+
+        const modal = document.querySelector(".edit-content-modal");
+        modal.classList.toggle("hidden");
+
+        const editHeader = document.querySelector(".edit-heading");
+        const editContent = document.querySelector(".edit-content");
+
+        editHeader.value = heading;
+        editContent.value = content;
+
+        const editSaveBtn = document.querySelector(".edit-save-btn");
+
+        editSaveBtn.addEventListener("click", async () => {
+          const noteData = {
+            notesHeading: editHeader.value,
+            notesContent: editContent.value,
+          };
+          console.log("Clicked!", noteData);
+          const apiUrl = "http://localhost:6060/updateNote/" + e;
+
+          await fetch(apiUrl, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(noteData),
+          });
+          location.reload();
         });
       }
     </script>

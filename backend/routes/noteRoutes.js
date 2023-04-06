@@ -24,13 +24,9 @@ app.get("/allNotes", async (req, res) => {
   } catch (err) {
     res.status(404).send([
       {
-        data: "None",
-      },
-      {
-        message: "Not Found",
-      },
-      {
-        status: 404,
+        data: err,
+        message: "Failed",
+        status: false,
       },
     ]);
   }
@@ -39,16 +35,10 @@ app.get("/allNotes", async (req, res) => {
 app.post("/newNote", async (req, res) => {
   try {
     console.log(req.body);
-    // const note = await notesModel(req.body);
-    // await note.save();
+    const note = await notesModel(req.body);
+    await note.save();
 
-    res.status(200).send([
-      {
-        data: null,
-        message: "Note created successfully",
-        status: true,
-      },
-    ]);
+    res.status(200).send([]);
   } catch (e) {
     res.status(200).send([
       {
@@ -58,60 +48,27 @@ app.post("/newNote", async (req, res) => {
       },
     ]);
   }
-
-  // try {
-  //   await note.save();
-  //   res.send([
-  //     {
-  //       data: note,
-  //     },
-  //     {
-  //       message: "Success",
-  //     },
-  //     {
-  //       status: 200,
-  //     },
-  //   ]);
-  // } catch (err) {
-  //   res.status(404).send([
-  //     {
-  //       data: "None",
-  //     },
-  //     {
-  //       message: "Not found",
-  //     },
-  //     {
-  //       status: 404,
-  //     },
-  //   ]);
-  // }
 });
 
 app.patch("/updateNote/:id", async (req, res) => {
+  console.log("Called!");
   try {
+    console.log(req.body);
     await notesModel.findByIdAndUpdate(req.params.id, req.body);
     await notesModel.save();
     res.send([
       {
-        data: "notes",
-      },
-      {
-        message: "Success",
-      },
-      {
-        status: 200,
+        data: null,
+        message: "Note Updated successfully",
+        status: true,
       },
     ]);
   } catch (error) {
     res.status(404).send([
       {
-        data: notes,
-      },
-      {
-        message: "Not found",
-      },
-      {
-        status: 404,
+        data: error,
+        message: "Failed",
+        status: false,
       },
     ]);
   }
@@ -124,38 +81,26 @@ app.delete("/deleteNote/:id", async (req, res) => {
     if (!note) {
       res.status(404).send([
         {
-          data: "None",
-        },
-        {
-          message: "Not Found",
-        },
-        {
-          status: 404,
+          data: null,
+          message: "Note Deleted successfully",
+          status: true,
         },
       ]);
     }
 
     res.status(200).send([
       {
-        data: note,
-      },
-      {
-        message: "Success",
-      },
-      {
-        status: 200,
+        data: null,
+        message: "Failed",
+        status: false,
       },
     ]);
   } catch (error) {
     res.status(404).send([
       {
-        data: "None",
-      },
-      {
-        message: "Not Found",
-      },
-      {
-        status: 404,
+        data: error,
+        message: "Failed",
+        status: false,
       },
     ]);
   }
