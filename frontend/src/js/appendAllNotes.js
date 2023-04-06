@@ -76,6 +76,9 @@ function appendAllData() {
     });
 }
 
-if (location.href.includes("index")) {
+if (
+  location.href.includes("index") ||
+  location.href === "http://localhost:8000/"
+) {
   appendAllData();
 }
