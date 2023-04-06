@@ -16,15 +16,8 @@
   </head>
   <body class="overflow-x-hidden">
     <nav class="flex justify-between m-5">
-      <h1 class="my-auto">Notes</h1>
+      <h1 class="my-auto xl:text-6xl">Notes</h1>
       <div class="flex gap-5">
-        <button class="py-2 px-3 bg-[#3b3b3b] rounded-xl all-notes-search-btn">
-          <img
-            src="images/content/header/search.svg"
-            alt="search-icon"
-            class="w-6"
-          />
-        </button>
         <a
           href="#"
           target="_blank"
@@ -64,11 +57,12 @@
         <img src="images/content/header/add.svg" alt="" />
       </button>
     </div>
-    <section class="edit-content-modal hidden">
+    <section class="edit-content-modal hidden overflow-hidden">
       <nav class="flex justify-between p-5">
         <button class="my-auto go-home-link modal-go-home">
           <i class="fa fa-arrow-left text-3xl"></i>
         </button>
+        <h2>Edit Note</h2>
         <button class="reset-note-button">
           <i class="fa fa-rotate-left text-3xl"></i>
         </button>
@@ -77,19 +71,44 @@
         type="text"
         name=""
         id=""
-        class="heading edit-heading"
+        class="heading edit-heading xl:text-5xl"
         placeholder="Heading"
       />
       <textarea
         name=""
         id=""
         cols="30"
-        rows="10"
-        class="content edit-content"
+        rows="30"
+        class="content edit-content overflow-scroll xl:text-4xl"
         placeholder="Content goes Here...."
       ></textarea>
       <button><i class="fa fa-edit edit-save-btn"></i></button>
     </section>
+    <section class="warning-modal hidden">
+      <div
+        class="warning-card text-center flex flex-col gap-5 w-[15rem] md:w-[20rem]"
+      >
+        <h2 class="text-2xl md:text-6xl text-yellow-500">Caution!</h2>
+        <p class="text-[12px] md:text-2xl">
+          This action once performed cannot be undone
+        </p>
+        <div class="flex justify-around text-[10px] md:text-xl">
+          <button
+            class="warning-model-cancel bg-gray-400 p-2 md:px-5 md:py-2 rounded-xl hover:bg-gray-600 transition-all duration-300"
+          >
+            Cancel
+          </button>
+          <button
+            class="warning-model-proceed bg-red-500 p-2 md:px-5 md:py-2 rounded-xl hover:bg-red-700 transition-all duration-300"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="global-message-box hidden">Deleted!</div>
+
     <script>
       //Functions not working when updated in main JS
 
@@ -97,52 +116,115 @@
 
       async function deleteBtnHandler(e) {
         const apiUrl = "http://localhost:6060/deleteNote/" + e;
-        await fetch(apiUrl, {
-          method: "delete",
+
+        const warningModal = document.querySelector(".warning-card");
+        warningModal.parentElement.classList.toggle("hidden");
+
+        const warningModalCancel = document.querySelector(
+          ".warning-model-cancel"
+        );
+        const warningModalDelete = document.querySelector(
+          ".warning-model-proceed"
+        );
+
+        warningModalDelete.addEventListener("click", async () => {
+          const globalMessage = document.querySelector(".global-message-box");
+
+          globalMessage.classList.toggle("hidden");
+          globalMessage.classList.toggle("global-color-danger");
+
+          const note = document.getElementById(e);
+          note.remove();
+          warningModal.parentElement.classList.toggle("hidden");
+
+          setTimeout(() => {
+            globalMessage.classList.toggle("global-color-danger");
+            globalMessage.classList.toggle("hidden");
+          }, 2000);
+
+          await fetch(apiUrl, {
+            method: "delete",
+          });
         });
 
-        location.reload();
+        warningModalCancel.addEventListener("click", () => {
+          warningModal.parentElement.classList.toggle("hidden");
+        });
       }
 
       //Note Edit Function
 
       async function editBtnHandler(e) {
-        console.log(e);
+        const editModal = document.querySelector(".edit-content-modal");
 
-        const parentElement = document.getElementById(`${e}`);
-        let heading = parentElement.firstChild;
-        let content = heading.nextSibling;
-        heading = heading.textContent;
-        content = content.textContent;
-        console.log(heading, content);
+        const warningModal = document.querySelector(".warning-card");
+        warningModal.parentElement.classList.toggle("hidden");
 
-        const modal = document.querySelector(".edit-content-modal");
-        modal.classList.toggle("hidden");
+        const warningModalCancel = document.querySelector(
+          ".warning-model-cancel"
+        );
+        const warningModalEdit = document.querySelector(
+          ".warning-model-proceed"
+        );
+        warningModalEdit.textContent = "Edit";
 
-        const editHeader = document.querySelector(".edit-heading");
-        const editContent = document.querySelector(".edit-content");
+        warningModalCancel.addEventListener("click", () => {
+          warningModal.parentElement.classList.toggle("hidden");
+        });
 
-        editHeader.value = heading;
-        editContent.value = content;
+        warningModalEdit.addEventListener("click", () => {
+          warningModal.parentElement.classList.toggle("hidden");
 
-        const editSaveBtn = document.querySelector(".edit-save-btn");
+          const parentElement = document.getElementById(`${e}`);
+          let heading = parentElement.firstChild;
+          let content = heading.nextSibling;
+          heading = heading.textContent;
+          content = content.textContent;
+          console.log(heading, content);
 
-        editSaveBtn.addEventListener("click", async () => {
-          const noteData = {
-            notesHeading: editHeader.value,
-            notesContent: editContent.value,
-          };
-          console.log("Clicked!", noteData);
-          const apiUrl = "http://localhost:6060/updateNote/" + e;
+          editModal.classList.toggle("hidden");
 
-          await fetch(apiUrl, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(noteData),
+          const editHeader = document.querySelector(".edit-heading");
+          const editContent = document.querySelector(".edit-content");
+
+          editHeader.value = heading;
+          editContent.value = content;
+
+          const editSaveBtn = document.querySelector(".edit-save-btn");
+
+          editSaveBtn.addEventListener("click", async () => {
+            const noteData = {
+              notesHeading: editHeader.value,
+              notesContent: editContent.value,
+            };
+            console.log("Clicked!", noteData);
+            const apiUrl = "http://localhost:6060/updateNote/" + e;
+
+            await fetch(apiUrl, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(noteData),
+            });
+            editModal.classList.toggle("hidden");
+
+            const globalMessage = document.querySelector(".global-message-box");
+
+            globalMessage.textContent = "Edited!";
+            globalMessage.classList.toggle("hidden");
+            globalMessage.classList.toggle("global-color-sucess");
+
+            setTimeout(() => {
+              globalMessage.classList.toggle("global-color-sucess");
+              globalMessage.classList.toggle("hidden");
+              globalMessage.textContent = "Deleted!";
+            }, 2000);
+
+            setTimeout(() => {
+              location.reload();
+            }, 2000);
           });
-          location.reload();
         });
       }
     </script>

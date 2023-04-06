@@ -4,6 +4,8 @@ function appendAllData() {
   const notes = document.querySelectorAll(".note");
   if (notes.length === 0) {
     document.querySelector(".home-header").classList.toggle("hidden");
+  } else {
+    document.querySelector(".home-header").classList.toggle("hidden");
   }
 
   //Function to Fetch All the Data and append them in a div
@@ -27,7 +29,6 @@ function appendAllData() {
 
   getRouteData("http://localhost:6060/allNotes")
     .then((allNotes) => {
-      console.log(allNotes[0].data);
       for (let i = 0; i < allNotes[0].data.length; i++) {
         const note = document.createElement("div");
 

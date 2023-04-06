@@ -4,6 +4,8 @@ import "./sendNewNoteData";
 
 /* Adding Add button trigger Effect */
 
+console.log("Loads");
+
 function homePage() {
   const homeNewBtn = document.querySelector(".home-new-btn");
   const newBtnDropdown = document.querySelector(".add-icon-dropdown");
@@ -33,6 +35,9 @@ function homePage() {
   });
 }
 
-if (location.href.includes("index")) {
+if (
+  location.href.includes("index") ||
+  location.href === "http://localhost:8000/"
+) {
   homePage();
 }

@@ -185,10 +185,54 @@ body h1 {
 
 .edit-content-modal {
   position: absolute;
-  height: 100%;
+  height: 100vh;
   width: 100vw;
   top: -1rem;
   bottom: 0;
   background-color: #25252571;
   backdrop-filter: blur(20px);
+}
+@media screen and (min-width: 992px) {
+  .edit-content-modal {
+    height: 100vh;
+  }
+}
+
+.warning-modal {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #25252569;
+  backdrop-filter: blur(20px);
+}
+.warning-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  margin: auto;
+  margin-top: 33vh;
+  width: 20rem;
+  background-color: #25252582;
+  backdrop-filter: blur(20px);
+}
+
+//Global Message Box
+
+.global-message-box {
+  font-size: 2rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 80vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  text-align: center;
+  border-radius: 1rem;
+}
+.global-color-danger {
+  background-color: rgb(209, 54, 54);
+}
+.global-color-sucess {
+  background-color: rgb(73, 212, 73);
 }
