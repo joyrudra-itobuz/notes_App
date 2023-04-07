@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
 import express from "express";
 import * as noteRouter from "./routes/noteRoutes.js";
 import cors from "cors";
-import * as details from "./config.js";
+import { db } from "./connection/connection.js";
 
 const port = 6060;
 
@@ -10,22 +9,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
-try {
-  mongoose.connect(
-    `mongodb+srv://${details.credentials.userName}:${details.credentials.password}@${details.credentials.cluster}.mongodb.net/${details.credentials.collectionId}`
-  );
-  console.log(
-    "Connected to DataBase with\nUsername : ",
-    credentials.userName,
-    "\nPassword :",
-    credentials.password,
-    "\nCollection ID : ",
-    credentials.collectionId
-  );
-} catch (err) {
-  console.log(err, "Couldn't connect");
-}
 
 app.use(noteRouter.app);
 
