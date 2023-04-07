@@ -4,6 +4,12 @@ function newNote() {
   const heading = document.querySelector(".heading");
   const content = document.querySelector(".content");
   const saveBtn = document.querySelector(".save-btn");
+  const resetBtn = document.querySelector(".new-note-reset-button");
+
+  resetBtn.addEventListener("click", () => {
+    heading.value = "";
+    content.value = "";
+  });
 
   saveBtn.addEventListener("click", async () => {
     const noteData = {

@@ -30,7 +30,7 @@
       </div>
     </nav>
     <header
-      class="flex flex-col justify-center items-center h-[70vh] home-header"
+      class="flex flex-col justify-center items-center h-[70vh] home-header hidden"
     >
       <img
         src="images/content/header/rafiki.svg"
@@ -59,11 +59,15 @@
     </div>
     <section class="edit-content-modal hidden overflow-hidden">
       <nav class="flex justify-between pl-5 m-5">
-        <button class="my-auto go-home-link modal-go-home">
+        <button
+          class="my-auto go-home-link modal-go-home hover:scale-125 hover:translate-x-[-1rem] transition-all duration-300"
+        >
           <i class="fa fa-arrow-left text-3xl"></i>
         </button>
         <h2 class="xl:text-6xl">Edit Note</h2>
-        <button class="reset-note-button">
+        <button
+          class="edit-reset-button hover:rotate-[-360deg] hover:scale-125 transition-all duration-300"
+        >
           <i class="fa fa-rotate-left text-3xl"></i>
         </button>
       </nav>
@@ -156,7 +160,8 @@
         });
 
         warningModalCancel.addEventListener("click", () => {
-          warningModal.parentElement.classList.toggle("hidden");
+          console.log("cancelled");
+          location.reload();
         });
       }
 
@@ -178,9 +183,17 @@
 
         warningModalCancel.addEventListener("click", () => {
           warningModal.parentElement.classList.toggle("hidden");
+          location.reload();
         });
 
         warningModalEdit.addEventListener("click", () => {
+          const resetBtn = document.querySelector(".edit-reset-button");
+
+          resetBtn.addEventListener("click", () => {
+            editHeader.value = "";
+            editContent.value = "";
+          });
+
           warningModal.parentElement.classList.toggle("hidden");
 
           const parentElement = document.getElementById(`${e}`);

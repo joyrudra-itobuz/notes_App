@@ -14,6 +14,7 @@ try {
   mongoose.connect(
     "mongodb+srv://joyrudra_itobuz:balmerol@cluster0.r8mjb62.mongodb.net/notes_App"
   );
+  console.log("Connected to DataBase");
 } catch (err) {
   console.log(err, "Couldn't connect");
 }

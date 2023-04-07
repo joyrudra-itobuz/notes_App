@@ -2,9 +2,7 @@ function appendAllData() {
   //Funtion to See if There are no New Notes
 
   const notes = document.querySelectorAll(".note");
-  if (notes.length === 0) {
-    document.querySelector(".home-header").classList.toggle("hidden");
-  } else {
+  if (notes.length !== 0) {
     document.querySelector(".home-header").classList.toggle("hidden");
   }
 

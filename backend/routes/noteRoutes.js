@@ -10,17 +10,11 @@ app.get("/allNotes", async (req, res) => {
   const notes = await notesModel.find({});
 
   try {
-    res.status(200).send([
-      {
-        data: notes,
-      },
-      {
-        message: "Success",
-      },
-      {
-        status: 200,
-      },
-    ]);
+    res.status(200).send({
+      data: notes,
+      message: "Success",
+      status: 200,
+    });
   } catch (err) {
     res.status(404).send({
       data: err,
@@ -35,16 +29,17 @@ app.post("/newNote", async (req, res) => {
     console.log(req.body);
     const note = await notesModel(req.body);
     await note.save();
+    console.log(req.body);
 
     res.status(200).send({
       data: null,
-      message: "Note Created successfully",
+      message: "Added!",
       status: true,
     });
   } catch (e) {
     res.status(200).send({
       data: e,
-      message: "Failed",
+      message: "Failed!",
       status: false,
     });
   }
