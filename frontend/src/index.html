@@ -19,8 +19,7 @@
       <h1 class="my-auto xl:text-6xl">Notes</h1>
       <div class="flex gap-5">
         <a
-          href="#"
-          target="_blank"
+          href="info.html"
           class="my-auto p-3 bg-[#3b3b3b] rounded-xl home-info-link"
           ><img
             src="images/content/header/info.svg"
@@ -47,14 +46,16 @@
         class="flex flex-col gap-5 add-icon-dropdown hidden add-icon-dropdown-closing-amimation"
       >
         <a href="newNote.html"> <li>NEW</li> </a
-        ><a href="editNote.html"> <li>EDIT</li> </a
-        ><a href="#"> <li>FOCUS</li> </a>
+        ><a href="info.html" target="_blank"> <li>Info</li> </a
+        ><a href="https://github.com/joyrudra-itobuz/notes_App" target="_blank">
+          <li class="fa-brands fa-github"></li>
+        </a>
       </ul>
       <button
         class="bg-[#252525] rounded-full home-new-btn p-3"
         id="homeNewBtn"
       >
-        <img src="images/content/header/add.svg" alt="" />
+        <img src="images/content/header/add.svg" alt="add-img" />
       </button>
     </div>
     <section class="edit-content-modal hidden overflow-hidden">
@@ -120,8 +121,11 @@
 
       //Fetch Function
 
+      const localhostUrl = "http://localhost:6060/";
+
       async function fetchUrl(apiUrl, method, data) {
         await fetch(apiUrl, {
+          mode: "cors",
           method: method,
           headers: {
             "Content-Type": "application/json",
@@ -139,7 +143,7 @@
       //Note Del Function
 
       async function deleteBtnHandler(e) {
-        const apiUrl = "http://localhost:6060/deleteNote/" + e;
+        const apiUrl = `${localhostUrl}deleteNote/` + e;
 
         const warningModal = document.querySelector(".warning-card");
         warningModal.parentElement.classList.toggle("hidden");
@@ -162,12 +166,7 @@
 
           let apiResMsg = "";
 
-          await fetch(apiUrl, {
-            method: "delete",
-          }).then((res) => {
-            console.log(res.json());
-            return res;
-          });
+          fetchUrl(apiUrl, "delete", {});
 
           setTimeout(() => {
             globalMessage.classList.toggle("global-color-danger");
@@ -178,7 +177,6 @@
         });
 
         warningModalCancel.addEventListener("click", () => {
-          console.log("cancelled");
           location.reload();
         });
       }
@@ -221,8 +219,6 @@
           heading = heading.textContent;
           content = content.textContent;
 
-          console.log(heading, content);
-
           editModal.classList.toggle("hidden");
 
           const editHeader = document.querySelector(".edit-heading");
@@ -239,9 +235,7 @@
               notesContent: editContent.value,
             };
 
-            console.log("Clicked!", noteData);
-
-            const apiUrl = "http://localhost:6060/updateNote/" + e;
+            const apiUrl = `${localhostUrl}updateNote/` + e;
 
             fetchUrl(apiUrl, "PATCH", noteData);
 

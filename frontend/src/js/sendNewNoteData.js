@@ -17,8 +17,6 @@ function newNote() {
       notesContent: content.value,
     };
 
-    console.log("Clicked!", noteData);
-
     const globalMessage = document.querySelector(".global-message-box");
     globalMessage.classList.toggle("hidden");
     globalMessage.classList.toggle("global-color-sucess");
