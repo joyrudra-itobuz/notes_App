@@ -118,6 +118,24 @@
     <script>
       //Functions not working when updated in main JS
 
+      //Fetch Function
+
+      async function fetchUrl(apiUrl, method, data) {
+        await fetch(apiUrl, {
+          method: method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .catch((err) => {
+            return err;
+          });
+      }
+
       //Note Del Function
 
       async function deleteBtnHandler(e) {
@@ -225,13 +243,7 @@
 
             const apiUrl = "http://localhost:6060/updateNote/" + e;
 
-            await fetch(apiUrl, {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(noteData),
-            });
+            fetchUrl(apiUrl, "PATCH", noteData);
 
             const globalMessage = document.querySelector(".global-message-box");
 

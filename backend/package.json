@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend of Notes App",
   "main": "server.js",
   "type": "module",
   "dependencies": {
