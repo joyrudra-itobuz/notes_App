@@ -137,19 +137,22 @@
 
           const note = document.getElementById(e);
           note.remove();
-          warningModal.parentElement.classList.toggle("hidden");
+
+          let apiResMsg = "";
+
+          await fetch(apiUrl, {
+            method: "delete",
+          }).then((res) => {
+            console.log(res.json());
+            return res;
+          });
 
           setTimeout(() => {
             globalMessage.classList.toggle("global-color-danger");
             globalMessage.classList.toggle("hidden");
-          }, 2000);
-
-          await fetch(apiUrl, {
-            method: "delete",
-          });
-          setTimeout(() => {
+            warningModal.parentElement.classList.toggle("hidden");
             location.reload();
-          }, 0);
+          }, 1000);
         });
 
         warningModalCancel.addEventListener("click", () => {
@@ -183,8 +186,10 @@
           const parentElement = document.getElementById(`${e}`);
           let heading = parentElement.firstChild;
           let content = heading.nextSibling;
+
           heading = heading.textContent;
           content = content.textContent;
+
           console.log(heading, content);
 
           editModal.classList.toggle("hidden");
@@ -202,7 +207,9 @@
               notesHeading: editHeader.value,
               notesContent: editContent.value,
             };
+
             console.log("Clicked!", noteData);
+
             const apiUrl = "http://localhost:6060/updateNote/" + e;
 
             await fetch(apiUrl, {
@@ -212,7 +219,6 @@
               },
               body: JSON.stringify(noteData),
             });
-            editModal.classList.toggle("hidden");
 
             const globalMessage = document.querySelector(".global-message-box");
 
@@ -224,9 +230,7 @@
               globalMessage.classList.toggle("global-color-sucess");
               globalMessage.classList.toggle("hidden");
               globalMessage.textContent = "Deleted!";
-            }, 2000);
-
-            setTimeout(() => {
+              editModal.classList.toggle("hidden");
               location.reload();
             }, 2000);
           });

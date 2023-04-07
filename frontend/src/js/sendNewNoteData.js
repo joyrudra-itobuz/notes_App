@@ -10,7 +10,12 @@ function newNote() {
       notesHeading: heading.value,
       notesContent: content.value,
     };
+
     console.log("Clicked!", noteData);
+
+    const globalMessage = document.querySelector(".global-message-box");
+    globalMessage.classList.toggle("hidden");
+    globalMessage.classList.toggle("global-color-sucess");
 
     await fetch("http://127.0.0.1:6060/newNote", {
       method: "POST",
@@ -19,7 +24,12 @@ function newNote() {
       },
       body: JSON.stringify(noteData),
     });
-    location.href = "index.html";
+
+    setTimeout(() => {
+      globalMessage.classList.toggle("hidden");
+      globalMessage.classList.toggle("global-color-sucess");
+      location.href = "index.html";
+    }, 1000);
   });
 }
 
