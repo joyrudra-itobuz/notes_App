@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import express from "express";
 import * as noteRouter from "./routes/noteRoutes.js";
 import cors from "cors";
-import * as credentials from "./credentials/mongooseCredentials.js";
+import * as details from "./config.js";
 
 const port = 6060;
 
@@ -13,7 +13,7 @@ app.use(cors());
 
 try {
   mongoose.connect(
-    `mongodb+srv://${credentials.userName}:${credentials.password}@cluster0.r8mjb62.mongodb.net/${credentials.collectionId}`
+    `mongodb+srv://${details.credentials.userName}:${details.credentials.password}@${details.credentials.cluster}.mongodb.net/${details.credentials.collectionId}`
   );
   console.log(
     "Connected to DataBase with\nUsername : ",
