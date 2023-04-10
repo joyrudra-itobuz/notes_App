@@ -1,6 +1,8 @@
 import "../scss/app.scss";
 import "./appendAllNotes";
 import "./sendNewNoteData";
+import "./deleteNote";
+import "./editNoteData";
 
 /* Adding Add button trigger Effect */
 
@@ -40,3 +42,29 @@ if (
 ) {
   homePage();
 }
+
+//Functions not working when updated in main JS
+
+//Fetch Function
+
+const localhostUrl = "http://localhost:6060/";
+
+async function fetchUrl(apiUrl, method, data) {
+  await fetch(apiUrl, {
+    mode: "cors",
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      return err;
+    });
+}
+
+window.localhostUrl = localhostUrl;
+window.fetchUrl = fetchUrl;

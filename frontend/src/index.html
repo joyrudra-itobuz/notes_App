@@ -28,6 +28,7 @@
         /></a>
       </div>
     </nav>
+
     <header
       class="flex flex-col justify-center items-center h-[70vh] home-header hidden"
     >
@@ -38,10 +39,12 @@
       />
       <p class="text-3xl no-notes-text text-center">Create your First Note</p>
     </header>
+
     <section
       class="all-notes-container flex flex-col gap-10 lg:flex-row lg:flex-wrap lg:mr-[-5rem] overflow-hidden lg:px-10"
     ></section>
-    <div>
+
+    <section>
       <ul
         class="flex flex-col gap-5 add-icon-dropdown hidden add-icon-dropdown-closing-amimation"
       >
@@ -57,7 +60,8 @@
       >
         <img src="images/content/header/add.svg" alt="add-img" />
       </button>
-    </div>
+    </section>
+
     <section class="edit-content-modal hidden overflow-hidden">
       <nav class="flex justify-between pl-5 m-5">
         <a
@@ -92,6 +96,7 @@
       </div>
       <button><i class="fa fa-edit edit-save-btn"></i></button>
     </section>
+
     <section class="warning-modal hidden">
       <div
         class="warning-card text-center flex flex-col gap-5 w-[15rem] md:w-[20rem]"
@@ -116,146 +121,5 @@
     </section>
 
     <div class="global-message-box hidden">Deleted!</div>
-
-    <script>
-      //Functions not working when updated in main JS
-
-      //Fetch Function
-
-      const localhostUrl = "http://localhost:6060/";
-
-      async function fetchUrl(apiUrl, method, data) {
-        await fetch(apiUrl, {
-          mode: "cors",
-          method: method,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((res) => {
-            return res.json();
-          })
-          .catch((err) => {
-            return err;
-          });
-      }
-
-      //Note Del Function
-
-      async function deleteBtnHandler(e) {
-        const apiUrl = `${localhostUrl}deleteNote/` + e;
-
-        const warningModal = document.querySelector(".warning-card");
-        warningModal.parentElement.classList.toggle("hidden");
-
-        const warningModalCancel = document.querySelector(
-          ".warning-model-cancel"
-        );
-        const warningModalDelete = document.querySelector(
-          ".warning-model-proceed"
-        );
-
-        warningModalDelete.addEventListener("click", async () => {
-          const globalMessage = document.querySelector(".global-message-box");
-
-          globalMessage.classList.toggle("hidden");
-          globalMessage.classList.toggle("global-color-danger");
-
-          const note = document.getElementById(e);
-          note.remove();
-
-          let apiResMsg = "";
-
-          fetchUrl(apiUrl, "delete", {});
-
-          setTimeout(() => {
-            globalMessage.classList.toggle("global-color-danger");
-            globalMessage.classList.toggle("hidden");
-            warningModal.parentElement.classList.toggle("hidden");
-            location.reload();
-          }, 1000);
-        });
-
-        warningModalCancel.addEventListener("click", () => {
-          location.reload();
-        });
-      }
-
-      //Note Edit Function
-
-      async function editBtnHandler(e) {
-        const editModal = document.querySelector(".edit-content-modal");
-
-        const warningModal = document.querySelector(".warning-card");
-        warningModal.parentElement.classList.toggle("hidden");
-
-        const warningModalCancel = document.querySelector(
-          ".warning-model-cancel"
-        );
-        const warningModalEdit = document.querySelector(
-          ".warning-model-proceed"
-        );
-        warningModalEdit.textContent = "Edit";
-
-        warningModalCancel.addEventListener("click", () => {
-          warningModal.parentElement.classList.toggle("hidden");
-          location.reload();
-        });
-
-        warningModalEdit.addEventListener("click", () => {
-          const resetBtn = document.querySelector(".edit-reset-button");
-
-          resetBtn.addEventListener("click", () => {
-            editHeader.value = "";
-            editContent.value = "";
-          });
-
-          warningModal.parentElement.classList.toggle("hidden");
-
-          const parentElement = document.getElementById(`${e}`);
-          let heading = parentElement.firstChild;
-          let content = heading.nextSibling;
-
-          heading = heading.textContent;
-          content = content.textContent;
-
-          editModal.classList.toggle("hidden");
-
-          const editHeader = document.querySelector(".edit-heading");
-          const editContent = document.querySelector(".edit-content");
-
-          editHeader.value = heading;
-          editContent.value = content;
-
-          const editSaveBtn = document.querySelector(".edit-save-btn");
-
-          editSaveBtn.addEventListener("click", async () => {
-            const noteData = {
-              notesHeading: editHeader.value,
-              notesContent: editContent.value,
-            };
-
-            const apiUrl = `${localhostUrl}updateNote/` + e;
-
-            fetchUrl(apiUrl, "PATCH", noteData);
-
-            const globalMessage = document.querySelector(".global-message-box");
-
-            globalMessage.textContent = "Edited!";
-            globalMessage.classList.toggle("hidden");
-            globalMessage.classList.toggle("global-color-sucess");
-
-            setTimeout(() => {
-              globalMessage.classList.toggle("global-color-sucess");
-              globalMessage.classList.toggle("hidden");
-              globalMessage.textContent = "Deleted!";
-              editModal.classList.toggle("hidden");
-              location.reload();
-            }, 2000);
-          });
-        });
-      }
-    </script>
   </body>
 </html>

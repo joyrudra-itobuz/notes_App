@@ -81,3 +81,5 @@ if (
 ) {
   appendAllData();
 }
+
+window.appendAllData = appendAllData;
