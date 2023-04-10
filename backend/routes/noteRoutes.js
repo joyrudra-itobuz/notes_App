@@ -6,7 +6,7 @@ export const app = express();
 
 app.use(cors());
 
-app.get("/allNotes", async (req, res) => {
+app.get("/allNotes", async (req, res, next) => {
   const notes = await notesModel.find({});
 
   try {
@@ -16,15 +16,11 @@ app.get("/allNotes", async (req, res) => {
       status: 200,
     });
   } catch (err) {
-    res.status(404).send({
-      data: err,
-      message: "Failed",
-      status: false,
-    });
+    next(err);
   }
 });
 
-app.post("/newNote", async (req, res) => {
+app.post("/newNote", async (req, res, next) => {
   try {
     const note = await notesModel(req.body);
     await note.save();
@@ -34,16 +30,12 @@ app.post("/newNote", async (req, res) => {
       message: "Added!",
       status: true,
     });
-  } catch (e) {
-    res.status(200).send({
-      data: e,
-      message: "Failed!",
-      status: false,
-    });
+  } catch (err) {
+    next(err);
   }
 });
 
-app.patch("/updateNote/:id", async (req, res) => {
+app.patch("/updateNote/:id", async (req, res, next) => {
   try {
     await notesModel.findByIdAndUpdate(req.params.id, req.body);
     await notesModel.save();
@@ -52,16 +44,12 @@ app.patch("/updateNote/:id", async (req, res) => {
       message: "Note Updated successfully",
       status: true,
     });
-  } catch (error) {
-    res.status(404).send({
-      data: error,
-      message: "Failed",
-      status: false,
-    });
+  } catch (err) {
+    next(err);
   }
 });
 
-app.delete("/deleteNote/:id", async (req, res) => {
+app.delete("/deleteNote/:id", async (req, res, next) => {
   try {
     const note = await notesModel.findByIdAndDelete(req.params.id, req.body);
     if (!note) {
@@ -76,11 +64,7 @@ app.delete("/deleteNote/:id", async (req, res) => {
       message: "Note Deletd Sucessfully",
       status: true,
     });
-  } catch (error) {
-    res.status(404).send({
-      data: error,
-      message: "Failed",
-      status: false,
-    });
+  } catch (err) {
+    next(err);
   }
 });
