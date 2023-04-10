@@ -26,10 +26,8 @@ app.get("/allNotes", async (req, res) => {
 
 app.post("/newNote", async (req, res) => {
   try {
-    console.log(req.body);
     const note = await notesModel(req.body);
     await note.save();
-    console.log(req.body);
 
     res.status(200).send({
       data: null,
@@ -46,9 +44,7 @@ app.post("/newNote", async (req, res) => {
 });
 
 app.patch("/updateNote/:id", async (req, res) => {
-  console.log("Called!");
   try {
-    console.log(req.body);
     await notesModel.findByIdAndUpdate(req.params.id, req.body);
     await notesModel.save();
     res.send({
@@ -68,7 +64,6 @@ app.patch("/updateNote/:id", async (req, res) => {
 app.delete("/deleteNote/:id", async (req, res) => {
   try {
     const note = await notesModel.findByIdAndDelete(req.params.id, req.body);
-    console.log("Deleted");
     if (!note) {
       res.status(404).send({
         data: null,

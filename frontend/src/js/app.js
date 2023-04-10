@@ -7,6 +7,7 @@ import "./sendNewNoteData";
 function homePage() {
   const homeNewBtn = document.querySelector(".home-new-btn");
   const newBtnDropdown = document.querySelector(".add-icon-dropdown");
+
   homeNewBtn.addEventListener("click", () => {
     if (
       newBtnDropdown.classList.contains("add-icon-dropdown-closing-amimation")
