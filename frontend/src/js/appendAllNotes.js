@@ -31,6 +31,10 @@ function appendAllData() {
         const note = document.createElement("div");
 
         note.classList.add("note");
+        note.setAttribute(
+          "onhover",
+          "onmouseover('" + response.data[i]._id + "')"
+        );
         note.id = response.data[i]._id;
         note.style.backgroundColor = notesBgColors[bgColorCount];
         bgColorCount++;

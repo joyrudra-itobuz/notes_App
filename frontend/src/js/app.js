@@ -66,5 +66,12 @@ async function fetchUrl(apiUrl, method, data) {
     });
 }
 
+const noteHoverAnimation = (id) => {
+  console.log("Hover");
+  const note = document.getElementById(id);
+  note.classList.add("note-focus");
+};
+
 window.localhostUrl = localhostUrl;
 window.fetchUrl = fetchUrl;
+window.noteHoverAnimation = noteHoverAnimation;
