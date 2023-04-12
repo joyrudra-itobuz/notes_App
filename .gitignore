@@ -3,3 +3,4 @@ credentials/
 node_modules/
 config.js
 backend/config/
+.DS_Store
