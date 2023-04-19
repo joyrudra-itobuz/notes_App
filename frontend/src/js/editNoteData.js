@@ -1,6 +1,6 @@
 //Note Edit Function
 
-async function editBtnHandler(e) {
+async function editBtnHandler(id) {
   const editModal = document.querySelector(".edit-content-modal");
 
   const warningModal = document.querySelector(".warning-card");
@@ -25,7 +25,7 @@ async function editBtnHandler(e) {
 
     warningModal.parentElement.classList.toggle("hidden");
 
-    const parentElement = document.getElementById(`${e}`);
+    const parentElement = document.getElementById(`${id}`);
     let heading = parentElement.firstChild;
     let content = heading.nextSibling;
 
@@ -48,7 +48,7 @@ async function editBtnHandler(e) {
         notesContent: editContent.value,
       };
 
-      const apiUrl = `${localhostUrl}updateNote/` + e;
+      const apiUrl = `${localhostUrl}updateNote/` + id;
 
       fetchUrl(apiUrl, "PATCH", noteData);
 

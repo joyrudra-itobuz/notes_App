@@ -8,8 +8,16 @@ function appendAllData() {
 
   //Function to Fetch All the Data and append them in a div
 
-  const getRouteData = async (apiUrl) => {
-    const response = await fetch(apiUrl)
+  async function getRouteData(apiUrl, method, data) {
+    const body = JSON.stringify(data);
+    const response = await fetch(apiUrl, {
+      mode: "cors",
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: body,
+    })
       .then((res) => {
         return res.json();
       })
@@ -18,14 +26,14 @@ function appendAllData() {
       });
 
     return response;
-  };
+  }
 
   const allNotesContainer = document.querySelector(".all-notes-container");
 
   const notesBgColors = ["#7ed183", "#799cd4", "#dfdf42", "#4de8db"];
   let bgColorCount = 0;
 
-  getRouteData("http://localhost:6060/allNotes")
+  getRouteData("http://localhost:6060/allNotes", "GET")
     .then((response) => {
       for (let i = 0; i < response.data.length; i++) {
         const note = document.createElement("div");

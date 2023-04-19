@@ -43,20 +43,19 @@ if (
   homePage();
 }
 
-//Functions not working when updated in main JS
-
 //Fetch Function
 
 const localhostUrl = "http://localhost:6060/";
 
 async function fetchUrl(apiUrl, method, data) {
+  const body = JSON.stringify(data);
   await fetch(apiUrl, {
     mode: "cors",
     method: method,
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body,
   })
     .then((res) => {
       return res.json();

@@ -1,15 +1,12 @@
 import cors from "cors";
-import express from "express";
+import { Router } from "express";
 import { notesModel } from "../models/notesStructure.js";
 
-export const app = express();
+export const noteRouter = Router();
 
-app.use(cors());
-
-app.get("/allNotes", async (req, res, next) => {
-  const notes = await notesModel.find({});
-
+noteRouter.get("/allNotes", async (req, res, next) => {
   try {
+    const notes = await notesModel.find();
     res.status(200).send({
       data: notes,
       message: "Success",
@@ -20,22 +17,28 @@ app.get("/allNotes", async (req, res, next) => {
   }
 });
 
-app.post("/newNote", async (req, res, next) => {
+noteRouter.post("/newNote", async (req, res, next) => {
   try {
+    if (!req.body?.notesHeading) {
+      throw new Error();
+    }
     const note = await notesModel(req.body);
-    await note.save();
-
-    res.status(200).send({
-      data: null,
-      message: "Added!",
-      status: true,
-    });
+    const response = await note.save();
+    if (response?._id) {
+      res.status(200).send({
+        data: null,
+        message: "Added!",
+        status: true,
+      });
+    } else {
+      throw new Error(response.message);
+    }
   } catch (err) {
     next(err);
   }
 });
 
-app.patch("/updateNote/:id", async (req, res, next) => {
+noteRouter.patch("/updateNote/:id", async (req, res, next) => {
   try {
     await notesModel.findByIdAndUpdate(req.params.id, req.body);
     await notesModel.save();
@@ -49,7 +52,7 @@ app.patch("/updateNote/:id", async (req, res, next) => {
   }
 });
 
-app.delete("/deleteNote/:id", async (req, res, next) => {
+noteRouter.delete("/deleteNote/:id", async (req, res, next) => {
   try {
     const note = await notesModel.findByIdAndDelete(req.params.id, req.body);
     if (!note) {
