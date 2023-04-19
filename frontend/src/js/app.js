@@ -3,7 +3,6 @@ import "./appendAllNotes";
 import "./sendNewNoteData";
 import "./deleteNote";
 import "./editNoteData";
-
 /* Adding Add button trigger Effect */
 
 function homePage() {
