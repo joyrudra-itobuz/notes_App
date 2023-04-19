@@ -1,4 +1,3 @@
-import cors from "cors";
 import { Router } from "express";
 import { notesModel } from "../models/notesStructure.js";
 
